@@ -4,5 +4,6 @@ public enum Expertise {
     ORTOPEDIA,
     DERMATOLOGIA,
     CARDIOLOGIA,
-    OBSTETRICIA
+    OBSTETRICIA,
+    ENDOCRINOLOGIA
 }

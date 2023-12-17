@@ -1,11 +1,9 @@
 package med.voll.api.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import med.voll.api.dto.ClientFormDTO;
+import med.voll.api.dto.ClientUpdateDTO;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,13 +14,15 @@ import med.voll.api.dto.ClientFormDTO;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
-    public String name;
-    public String email;
-    public String phone;
-    public String cpf;
+    private Long id;
+    private String name;
+    private String email;
+    private String phone;
+    private String cpf;
     @Embedded
-    public Address address;
+    private Address address;
+    @Setter
+    private boolean active;
 
     public Client(ClientFormDTO dto) {
         this.name = dto.name();
@@ -30,5 +30,19 @@ public class Client {
         this.phone = dto.phone();
         this.cpf = dto.cpf();
         this.address = new Address(dto.address());
+        this.active = true;
+    }
+
+    public void merge(ClientUpdateDTO data) {
+        if (data.name() != null)
+            this.name = data.name();
+        if (data.email() != null)
+            this.email = data.email();
+        if (data.phone() != null)
+            this.phone = data.phone();
+        if (data.cpf() != null)
+            this.cpf = data.cpf();
+        if (data.address() != null)
+            this.address.merge(data.address());
     }
 }
