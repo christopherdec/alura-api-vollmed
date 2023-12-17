@@ -3,6 +3,7 @@ package med.voll.api.controller;
 import jakarta.validation.Valid;
 import med.voll.api.dto.ProfessionalDTO;
 import med.voll.api.dto.ProfessionalFormDTO;
+import med.voll.api.dto.ProfessionalListingDTO;
 import med.voll.api.dto.ProfessionalUpdateDTO;
 import med.voll.api.model.Professional;
 import med.voll.api.repository.ProfessionalRepository;
@@ -10,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("professional")
@@ -22,28 +25,42 @@ public class ProfessionalController {
 
     @Transactional
     @PostMapping
-    public void register(@RequestBody @Valid ProfessionalFormDTO body) {
-        repository.save(new Professional(body));
+    public ResponseEntity<ProfessionalDTO> register(@RequestBody @Valid ProfessionalFormDTO body, UriComponentsBuilder uriBuilder) {
+        var professional = repository.save(new Professional(body));
+        var uri = uriBuilder.path("/professional/{id}")
+                .buildAndExpand(professional.getId())
+                .toUri();
+        return ResponseEntity.created(uri)
+                .body(new ProfessionalDTO(professional));
     }
 
     @GetMapping
-    public Page<ProfessionalDTO> list(@PageableDefault(size = 20, sort = {"name"}) Pageable pageable) {
-        return repository.findAllByActiveTrue(pageable).map(ProfessionalDTO::new);
+    public ResponseEntity<Page<ProfessionalListingDTO>> list(@PageableDefault(size = 20, sort = {"name"}) Pageable pageable) {
+        var page = repository.findAllByActiveTrue(pageable).map(ProfessionalListingDTO::new);
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfessionalDTO> get(@PathVariable Long id) {
+        var professional = repository.getReferenceById(id);
+        return ResponseEntity.ok(new ProfessionalDTO(professional));
     }
 
     @Transactional
     @PutMapping
-    public void update(@RequestBody @Valid ProfessionalUpdateDTO data) {
+    public ResponseEntity<ProfessionalDTO> update(@RequestBody @Valid ProfessionalUpdateDTO data) {
         var professional = repository.getReferenceById(data.id());
         professional.merge(data);
+        return ResponseEntity.ok(new ProfessionalDTO(professional));
     }
 
     @Transactional
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
 //        repository.deleteById(id);
         var professional = repository.getReferenceById(id);
         professional.setActive(false);
+        return ResponseEntity.noContent().build();
     }
 
 }
