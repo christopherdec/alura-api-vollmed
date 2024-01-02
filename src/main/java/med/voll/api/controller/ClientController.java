@@ -1,11 +1,11 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
-import med.voll.api.dto.ClientDTO;
-import med.voll.api.dto.ClientFormDTO;
-import med.voll.api.dto.ClientListingDTO;
-import med.voll.api.dto.ClientUpdateDTO;
-import med.voll.api.model.Client;
+import med.voll.api.domain.client.ClientDTO;
+import med.voll.api.domain.client.ClientFormDTO;
+import med.voll.api.domain.client.ClientListingDTO;
+import med.voll.api.domain.client.ClientUpdateDTO;
+import med.voll.api.domain.client.Client;
 import med.voll.api.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -1,6 +1,4 @@
-package med.voll.api.dto;
-
-import med.voll.api.model.Client;
+package med.voll.api.domain.client;
 
 public record ClientListingDTO(Long id, String name, String email, String phone, String cpf) {
 

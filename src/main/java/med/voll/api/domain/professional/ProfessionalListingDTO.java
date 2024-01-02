@@ -1,7 +1,6 @@
-package med.voll.api.dto;
+package med.voll.api.domain.professional;
 
-import med.voll.api.model.Expertise;
-import med.voll.api.model.Professional;
+import med.voll.api.domain.expertise.Expertise;
 
 public record ProfessionalListingDTO(Long id, String name, String email, String crm, Expertise expertise) {
 

@@ -1,11 +1,11 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
-import med.voll.api.dto.ProfessionalDTO;
-import med.voll.api.dto.ProfessionalFormDTO;
-import med.voll.api.dto.ProfessionalListingDTO;
-import med.voll.api.dto.ProfessionalUpdateDTO;
-import med.voll.api.model.Professional;
+import med.voll.api.domain.professional.ProfessionalDTO;
+import med.voll.api.domain.professional.ProfessionalFormDTO;
+import med.voll.api.domain.professional.ProfessionalListingDTO;
+import med.voll.api.domain.professional.ProfessionalUpdateDTO;
+import med.voll.api.domain.professional.Professional;
 import med.voll.api.repository.ProfessionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
