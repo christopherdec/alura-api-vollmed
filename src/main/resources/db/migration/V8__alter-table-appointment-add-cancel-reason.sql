@@ -1,0 +1,1 @@
+alter table appointment add cancel_reason varchar(100) null;
