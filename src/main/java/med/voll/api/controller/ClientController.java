@@ -1,5 +1,6 @@
 package med.voll.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.voll.api.domain.client.ClientDTO;
 import med.voll.api.domain.client.ClientFormDTO;
@@ -18,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("client")
+@SecurityRequirement(name = "bearer-key")
 public class ClientController {
 
     @Autowired
