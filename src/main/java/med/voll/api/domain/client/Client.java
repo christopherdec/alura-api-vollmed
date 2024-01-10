@@ -10,6 +10,7 @@ import med.voll.api.domain.address.Address;
 @EqualsAndHashCode(of = "id")
 @Entity(name = "Client")
 @Table(name = "client")
+@Builder
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

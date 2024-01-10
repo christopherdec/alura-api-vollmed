@@ -11,6 +11,7 @@ import med.voll.api.domain.expertise.Expertise;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode(of = "id")
+@Builder
 public class Professional {
 
     @Id
